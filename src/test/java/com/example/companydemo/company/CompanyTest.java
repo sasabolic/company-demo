@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +35,7 @@ public class CompanyTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("Companies' name cannot be null!");
 
-        company = CompanyDataFixtures.company(null, "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.singleton(OwnerDataFixtures.owner()));
+        company = CompanyDataFixtures.company(null, "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.singletonList(OwnerDataFixtures.owner()));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class CompanyTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("Companies' address cannot be null!");
 
-        company = CompanyDataFixtures.company("Tesla", null, "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.singleton(OwnerDataFixtures.owner()));
+        company = CompanyDataFixtures.company("Tesla", null, "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.singletonList(OwnerDataFixtures.owner()));
     }
 
     @Test
@@ -51,7 +51,7 @@ public class CompanyTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("Companies' city cannot be null!");
 
-        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", null, "USA", "office@tesla.com", "+16506815000", Collections.singleton(OwnerDataFixtures.owner()));
+        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", null, "USA", "office@tesla.com", "+16506815000", Collections.singletonList(OwnerDataFixtures.owner()));
     }
 
     @Test
@@ -59,17 +59,17 @@ public class CompanyTest {
         thrown.expect(NullPointerException.class);
         thrown.expectMessage("Companies' country cannot be null!");
 
-        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", null, "office@tesla.com", "+16506815000", Collections.singleton(OwnerDataFixtures.owner()));
+        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", null, "office@tesla.com", "+16506815000", Collections.singletonList(OwnerDataFixtures.owner()));
     }
 
     @Test
     public void givenEmailNullWhenNewInstanceThenInitialized() {
-        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", null, "+16506815000", Collections.singleton(OwnerDataFixtures.owner()));
+        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", null, "+16506815000", Collections.singletonList(OwnerDataFixtures.owner()));
     }
 
     @Test
     public void givenPhoneNumberNullWhenNewInstanceThenInitialized() {
-        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", null, Collections.singleton(OwnerDataFixtures.owner()));
+        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", null, Collections.singletonList(OwnerDataFixtures.owner()));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class CompanyTest {
         thrown.expect(IllegalArgumentException.class);
         thrown.expectMessage("Companies' list of owners cannot be empty!");
 
-        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.emptySet());
+        company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.emptyList());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
 
@@ -120,7 +120,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -136,7 +136,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -152,7 +152,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -168,7 +168,7 @@ public class CompanyTest {
         final String newCountry = null;
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -181,7 +181,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = null;
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -194,7 +194,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = null;
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("New Owner"));
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -210,7 +210,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = null;
+        final List<Owner> newOwners = null;
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
@@ -226,7 +226,7 @@ public class CompanyTest {
         final String newCountry = "Serbia";
         final String newEmail = "new@email.com";
         final String newPhoneNumber = "+381888888888";
-        final Set<Owner> newOwners = Collections.emptySet();
+        final List<Owner> newOwners = Collections.emptyList();
 
         company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }

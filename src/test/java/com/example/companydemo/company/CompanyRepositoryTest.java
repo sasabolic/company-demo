@@ -72,7 +72,7 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenSaveWithMultipleOwnersThenReturnCorrectResult() {
-        final Set<Owner> owners = OwnerDataFixtures.owners();
+        final List<Owner> owners = OwnerDataFixtures.owners();
         final Company company = CompanyDataFixtures.companyWithOwners(owners);
 
         final Company result = repository.save(company);

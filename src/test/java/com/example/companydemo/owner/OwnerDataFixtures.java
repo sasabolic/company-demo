@@ -1,8 +1,7 @@
 package com.example.companydemo.owner;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Arrays;
+import java.util.List;
 
 public class OwnerDataFixtures {
 
@@ -14,11 +13,10 @@ public class OwnerDataFixtures {
         return owner("Elon Musk");
     }
 
-    public static Set<Owner> owners() {
-        return Stream.of(
+    public static List<Owner> owners() {
+        return Arrays.asList(
                 owner("Elon Musk"),
                 owner("Richard Hendricks"),
-                owner(" Erlich Bachman")
-        ).collect(Collectors.toSet());
+                owner(" Erlich Bachman"));
     }
 }

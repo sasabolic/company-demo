@@ -70,7 +70,7 @@ public class CompanyServiceTest {
     @Test
     public void whenCreatingCompanyThenReturnCompany() {
         final String name = "Tesla";
-        final Set<Owner> owners = Collections.singleton(OwnerDataFixtures.owner("Elon Musk"));
+        final List<Owner> owners = Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"));
 
         doReturn(CompanyDataFixtures.companyWithNameAndOwners(name, owners)).when(companyRepository).save(isA(Company.class));
 
@@ -84,9 +84,9 @@ public class CompanyServiceTest {
     @Test
     public void whenUpdatingCompanyThenReturnCompany() {
         final String name = "Tesla";
-        final Set<Owner> owners = Collections.singleton(OwnerDataFixtures.owner("Elon Musk"));
+        final List<Owner> owners = Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"));
         final String newName = "New Tesla";
-        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("Jian Yang"));
+        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("Jian Yang"));
 
         doReturn(Optional.of(CompanyDataFixtures.companyWithNameAndOwners(name, owners))).when(companyRepository).findById(isA(Long.class));
         doReturn(CompanyDataFixtures.companyWithNameAndOwners(newName, newOwners)).when(companyRepository).save(isA(Company.class));
