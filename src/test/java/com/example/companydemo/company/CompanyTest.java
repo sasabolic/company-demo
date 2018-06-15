@@ -1,5 +1,6 @@
 package com.example.companydemo.company;
 
+import com.example.companydemo.owner.Owner;
 import com.example.companydemo.owner.OwnerDataFixtures;
 import org.junit.Before;
 import org.junit.Rule;
@@ -7,6 +8,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.Collections;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -84,5 +86,148 @@ public class CompanyTest {
         thrown.expectMessage("Companies' list of owners cannot be empty!");
 
         company = CompanyDataFixtures.company("Tesla", "3500 Deer Creek Road, CA 94304", "Palo Alto", "USA", "office@tesla.com", "+16506815000", Collections.emptySet());
+    }
+
+    @Test
+    public void whenUpdateThenFieldsChanged() {
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+
+        assertThat(company).hasFieldOrPropertyWithValue("name", newName);
+        assertThat(company).hasFieldOrPropertyWithValue("address", newAddress);
+        assertThat(company).hasFieldOrPropertyWithValue("city", newCity);
+        assertThat(company).hasFieldOrPropertyWithValue("country", newCountry);
+        assertThat(company).hasFieldOrPropertyWithValue("email", newEmail);
+        assertThat(company).hasFieldOrPropertyWithValue("phoneNumber", newPhoneNumber);
+        assertThat(company).hasFieldOrPropertyWithValue("owners", newOwners);
+    }
+
+    @Test
+    public void givenNameNullWhenUpdateThenThrowException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("Companies' name cannot be null!");
+
+        final String newName = null;
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenAddressNullWhenUpdateThenThrowException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("Companies' address cannot be null!");
+
+        final String newName = "New Name";
+        final String newAddress = null;
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenCityNullWhenUpdateThenThrowException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("Companies' city cannot be null!");
+
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = null;
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenCountryNullWhenUpdateThenThrowException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("Companies' country cannot be null!");
+
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = null;
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenEmailNullWhenUpdateThenInitialized() {
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = null;
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenPhoneNumberNullWhenUpdateThenInitialized() {
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = null;
+        final Set<Owner> newOwners = Collections.singleton(OwnerDataFixtures.owner("New Owner"));
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenOwnerListNullWhenUpdateThenThrowException() {
+        thrown.expect(NullPointerException.class);
+        thrown.expectMessage("Companies' list of owners cannot be null!");
+
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = null;
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
+    }
+
+    @Test
+    public void givenOwnerListEmptyWhenUpdateThenThrowException() {
+        thrown.expect(IllegalArgumentException.class);
+        thrown.expectMessage("Companies' list of owners cannot be empty!");
+
+        final String newName = "New Name";
+        final String newAddress = "Newish";
+        final String newCity = "Belgrade";
+        final String newCountry = "Serbia";
+        final String newEmail = "new@email.com";
+        final String newPhoneNumber = "+381888888888";
+        final Set<Owner> newOwners = Collections.emptySet();
+
+        company.update(newName, newAddress, newCity, newCountry, newEmail, newPhoneNumber, newOwners);
     }
 }

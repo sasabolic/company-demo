@@ -6,8 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
+/**
+ * Company entity.
+ *
+ * @author Sasa Bolic
+ */
 @Entity
 @Getter
 @NoArgsConstructor
@@ -59,11 +66,17 @@ public class Company {
         this.owners = owners;
     }
 
-    public void update(String name, String address, String city, String country, String email, String phoneNumber) {
+    public void update(String name, String address, String city, String country, String email, String phoneNumber, Set<Owner> owners) {
         Objects.requireNonNull(name, "Companies' name cannot be null!");
         Objects.requireNonNull(address, "Companies' address cannot be null!");
         Objects.requireNonNull(city, "Companies' city cannot be null!");
         Objects.requireNonNull(country, "Companies' country cannot be null!");
+        Objects.requireNonNull(owners, "Companies' list of owners cannot be null!");
+
+        if (owners.isEmpty()) {
+            throw new IllegalArgumentException("Companies' list of owners cannot be empty!");
+        }
+
 
         this.name = name;
         this.address = address;
@@ -71,5 +84,6 @@ public class Company {
         this.country = country;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.owners = owners;
     }
 }
