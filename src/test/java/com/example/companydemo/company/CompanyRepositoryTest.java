@@ -2,7 +2,6 @@ package com.example.companydemo.company;
 
 import com.example.companydemo.owner.Owner;
 import com.example.companydemo.owner.OwnerDataFixtures;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
