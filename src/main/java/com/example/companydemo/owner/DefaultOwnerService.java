@@ -1,8 +1,5 @@
 package com.example.companydemo.owner;
 
-import com.example.companydemo.company.Company;
-import com.example.companydemo.company.CompanyNotFoundException;
-import com.example.companydemo.company.CompanyRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
