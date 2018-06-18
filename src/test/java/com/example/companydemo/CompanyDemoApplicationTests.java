@@ -1,16 +1,28 @@
 package com.example.companydemo;
 
+import com.example.companydemo.company.web.CompanyController;
+import com.example.companydemo.owner.web.OwnerController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CompanyDemoApplicationTests {
 
-	@Test
-	public void contextLoads() {
-	}
+	@Autowired
+	private CompanyController companyController;
 
+	@Autowired
+	private OwnerController ownerController;
+
+	@Test
+	public void whenContextLoadThenControllersCreated() {
+		assertThat(companyController).isNotNull();
+		assertThat(ownerController).isNotNull();
+	}
 }
