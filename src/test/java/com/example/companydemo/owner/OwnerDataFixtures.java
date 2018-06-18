@@ -17,6 +17,6 @@ public class OwnerDataFixtures {
         return Arrays.asList(
                 owner("Elon Musk"),
                 owner("Richard Hendricks"),
-                owner(" Erlich Bachman"));
+                owner("Erlich Bachman"));
     }
 }
