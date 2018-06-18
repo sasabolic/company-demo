@@ -23,13 +23,6 @@ public class CompanyRepositoryTest {
     @Autowired
     private CompanyRepository repository;
 
-//    @Before
-//    public void setUp() {
-//        company = CompanyDataFixtures.company();
-//        entityManager.persist(customer);
-//        entityManager.flush();
-//    }
-
     @Test
     public void whenSaveThenSizeIncreased() {
         Long before = repository.count();
@@ -101,6 +94,24 @@ public class CompanyRepositoryTest {
         entityManager.flush();
 
         final Company result = repository.findById(company.getId()).get();
+
+        assertThat(result).isNotNull();
+        assertThat(result.getName()).isEqualTo(company.getName());
+        assertThat(result.getAddress()).isEqualTo(company.getAddress());
+        assertThat(result.getCity()).isEqualTo(company.getCity());
+        assertThat(result.getCountry()).isEqualTo(company.getCountry());
+        assertThat(result.getEmail()).isEqualTo(company.getEmail());
+        assertThat(result.getPhoneNumber()).isEqualTo(company.getPhoneNumber());
+        assertThat(result.getOwners()).isEqualTo(company.getOwners());
+    }
+
+    @Test
+    public void whenSearchByNameAndCountryThenReturnCorrectResult() {
+        final Company company = CompanyDataFixtures.companyWithName("Tesla");
+        entityManager.persist(company);
+        entityManager.flush();
+
+        final Company result = repository.findByNameAndCountry("tesla", "usa").get();
 
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo(company.getName());

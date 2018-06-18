@@ -39,6 +39,11 @@ public class DefaultCompanyService implements CompanyService {
 
     @Override
     public Company save(CompanyInfo company) {
+        this.companyRepository.findByNameAndCountry(company.getName(), company.getCountry())
+                .ifPresent(f -> {
+                    throw new CompanyUniqueViolationException(String.format("Company with name '%s' located in '%s' already exits", company.getName(), company.getCountry()));
+                });
+
         final List<Owner> owners = findOwners(company.getOwnerIds(), "Could not create new company");
 
         return this.companyRepository.save(new Company(company.getName(), company.getAddress(), company.getCity(), company.getCountry(), company.getEmail(), company.getPhoneNumber(), owners));
@@ -46,6 +51,11 @@ public class DefaultCompanyService implements CompanyService {
 
     @Override
     public Company update(Long id, CompanyInfo company) {
+        this.companyRepository.findByNameAndCountry(company.getName(), company.getCountry())
+                .ifPresent(f -> {
+                    throw new CompanyUniqueViolationException(String.format("Company with name '%s' located in '%s' already exits", company.getName(), company.getCountry()));
+                });
+
         final Company currentCompany = this.companyRepository.findById(id)
                 .orElseThrow(() -> new CompanyNotFoundException(String.format("Company with id '%d' does not exist", id)));
 

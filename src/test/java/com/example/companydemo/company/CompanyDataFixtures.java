@@ -6,6 +6,7 @@ import com.example.companydemo.owner.OwnerDataFixtures;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CompanyDataFixtures {
 
@@ -65,6 +66,16 @@ public class CompanyDataFixtures {
                 "office@tesla.com",
                 "+16506815000",
                 ownerIds);
+    }
+
+    public static CompanyInfo fromCompany(Company company) {
+        return new CompanyInfo(company.getName(),
+                company.getAddress(),
+                company.getCity(),
+                company.getCountry(),
+                company.getEmail(),
+                company.getPhoneNumber(),
+                company.getOwners().stream().map(Owner::getId).collect(Collectors.toList()));
     }
 
     public static String json() {

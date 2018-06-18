@@ -17,4 +17,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     @Query("SELECT c FROM Company c LEFT JOIN FETCH c.owners WHERE c.id = ?1")
     @Override
     Optional<Company> findById(Long id);
+
+    @Query("SELECT c FROM Company c WHERE UPPER(c.name) = UPPER(?1) AND UPPER(c.country) LIKE UPPER(?2)")
+    Optional<Company> findByNameAndCountry(String name, String country);
 }

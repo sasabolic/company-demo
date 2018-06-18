@@ -261,6 +261,47 @@ public class CompanyControllerTest {
     }
 
     @Test
+    public void whenCreateWithDuplicateNameAndCountryThenReturnStatusConflict() throws Exception {
+        final String name = "Tesla";
+        final String country = "USA";
+        final String message = "Company with name '" + name + "' located in '" + country + "' already exits";
+
+        given(this.companyService.save(any(CompanyInfo.class))).willThrow(new CompanyUniqueViolationException(message));
+
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/companies")
+                .content(CompanyDataFixtures.json())
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void whenCreateWithDuplicateNameAndCountryThenReturnJsonError() throws Exception {
+        final String name = "Tesla";
+        final String country = "USA";
+        final String message = "Company with name '" + name + "' located in '" + country + "' already exits";
+
+        given(this.companyService.save(any(CompanyInfo.class))).willThrow(new CompanyUniqueViolationException(message));
+
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post("/companies")
+                .content(CompanyDataFixtures.json())
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.timestamp").exists())
+                .andExpect(jsonPath("$.status", equalTo(409)))
+                .andExpect(jsonPath("$.message", equalTo(message)));
+    }
+
+    @Test
     public void whenUpdateThenReturnStatusNoContent() throws Exception {
         final long companyId = 1L;
         final Company company = spy(CompanyDataFixtures.company());
@@ -346,5 +387,46 @@ public class CompanyControllerTest {
                 .andExpect(jsonPath("$.message", equalTo("Validation failed")))
                 .andExpect(jsonPath("$.errors").isArray())
                 .andExpect(jsonPath("$.errors", hasSize(5)));
+    }
+
+    @Test
+    public void whenUpdateWithDuplicateNameAndCountryThenReturnStatusConflict() throws Exception {
+        final String name = "Tesla";
+        final String country = "USA";
+        final String message = "Company with name '" + name + "' located in '" + country + "' already exits";
+
+        given(this.companyService.update(anyLong(), any(CompanyInfo.class))).willThrow(new CompanyUniqueViolationException(message));
+
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/companies/{companyId}", 1L)
+                .content(CompanyDataFixtures.json())
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
+
+    @Test
+    public void whenUpdateWithDuplicateNameAndCountryThenReturnJsonError() throws Exception {
+        final String name = "Tesla";
+        final String country = "USA";
+        final String message = "Company with name '" + name + "' located in '" + country + "' already exits";
+
+        given(this.companyService.update(anyLong(), any(CompanyInfo.class))).willThrow(new CompanyUniqueViolationException(message));
+
+        final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .put("/companies/{companyId}", 1L)
+                .content(CompanyDataFixtures.json())
+                .contentType(MediaType.APPLICATION_JSON);
+
+        mockMvc.perform(requestBuilder)
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(jsonPath("$").exists())
+                .andExpect(jsonPath("$.timestamp").exists())
+                .andExpect(jsonPath("$.status", equalTo(409)))
+                .andExpect(jsonPath("$.message", equalTo(message)));
     }
 }

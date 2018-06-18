@@ -2,6 +2,7 @@ package com.example.companydemo.core;
 
 import com.example.companydemo.company.CompanyException;
 import com.example.companydemo.company.CompanyNotFoundException;
+import com.example.companydemo.company.CompanyUniqueViolationException;
 import lombok.Data;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -38,7 +39,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(RestError.of(HttpStatus.NOT_FOUND, e));
     }
 
-    @ExceptionHandler({DataIntegrityViolationException.class})
+    @ExceptionHandler({CompanyUniqueViolationException.class, DataIntegrityViolationException.class})
     public ResponseEntity<Object> handleAlreadyExist(Exception e) {
         return buildResponseEntity(RestError.of(HttpStatus.CONFLICT, e));
     }

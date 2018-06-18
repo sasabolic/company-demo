@@ -111,6 +111,18 @@ public class CompanyServiceTest {
     }
 
     @Test
+    public void whenCreatingCompanyWithDuplicateNameAndCountryThenThrowException() {
+        final Company company = spy(CompanyDataFixtures.company());
+
+        thrown.expect(CompanyUniqueViolationException.class);
+        thrown.expectMessage("Company with name '" + company.getName() + "' located in '" + company.getCountry() + "' already exits");
+
+        doReturn(Optional.of(company)).when(companyRepository).findByNameAndCountry(isA(String.class), isA(String.class));
+
+        service.save(CompanyDataFixtures.fromCompany(company));
+    }
+
+    @Test
     public void whenUpdatingCompanyThenReturnCompany() {
         final String name = "Tesla";
         final List<Owner> owners = Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"));
@@ -131,7 +143,6 @@ public class CompanyServiceTest {
 
     @Test
     public void whenUpdatingNonExistingCompanyThenThrowException() {
-        final Company company = CompanyDataFixtures.company();
         final long companyId = 1L;
 
         thrown.expect(CompanyNotFoundException.class);
@@ -169,5 +180,19 @@ public class CompanyServiceTest {
         assertThat(result).isNull();
 
         assertThat(result).isNull();
+    }
+
+    @Test
+    public void whenUpdatingCompanyWithDuplicateNameAndCountryThenThrowException() {
+        final Company company = spy(CompanyDataFixtures.company());
+        final long companyId = 5L;
+
+        thrown.expect(CompanyUniqueViolationException.class);
+        thrown.expectMessage("Company with name '" + company.getName() + "' located in '" + company.getCountry() + "' already exits");
+
+        doReturn(6L).when(company).getId();
+        doReturn(Optional.of(company)).when(companyRepository).findByNameAndCountry(isA(String.class), isA(String.class));
+
+        service.update(companyId, CompanyDataFixtures.fromCompany(company));
     }
 }
