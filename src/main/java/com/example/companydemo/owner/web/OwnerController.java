@@ -5,6 +5,7 @@ import com.example.companydemo.owner.Owner;
 import com.example.companydemo.owner.OwnerService;
 import com.example.companydemo.owner.web.dto.OwnerResponse;
 import com.example.companydemo.owner.web.dto.assembler.OwnerResponseAssembler;
+import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/owners")
+@Api(tags = "owner")
 public class OwnerController {
 
     private final OwnerService ownerService;

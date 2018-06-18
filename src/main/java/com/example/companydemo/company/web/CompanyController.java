@@ -8,6 +8,7 @@ import com.example.companydemo.company.web.dto.CompanyResponse;
 import com.example.companydemo.company.web.dto.SaveCompanyRequest;
 import com.example.companydemo.company.web.dto.assembler.CompanyDetailsResponseAssembler;
 import com.example.companydemo.company.web.dto.assembler.CompanyResponseAssembler;
+import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/companies")
+@Api(tags = "company")
 public class CompanyController {
 
     private final CompanyService companyService;

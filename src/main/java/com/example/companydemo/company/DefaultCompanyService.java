@@ -52,6 +52,7 @@ public class DefaultCompanyService implements CompanyService {
     @Override
     public Company update(Long id, CompanyInfo company) {
         this.companyRepository.findByNameAndCountry(company.getName(), company.getCountry())
+                .filter(f -> !f.getId().equals(id))
                 .ifPresent(f -> {
                     throw new CompanyUniqueViolationException(String.format("Company with name '%s' located in '%s' already exits", company.getName(), company.getCountry()));
                 });

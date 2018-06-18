@@ -183,6 +183,24 @@ public class CompanyServiceTest {
     }
 
     @Test
+    public void whenUpdatingCompanyWithSameIdAndWithDuplicateNameAndCountryThenReturnCompany() {
+        final Owner newOwner = spy(OwnerDataFixtures.owner("New Owner"));
+        final long ownerId = 2L;
+
+        final Company existingCompany = spy(CompanyDataFixtures.companyWithOwners(Collections.singletonList(OwnerDataFixtures.owner("Old Owner"))));
+        final Company company = spy(CompanyDataFixtures.companyWithOwners(Collections.singletonList(newOwner)));
+        final long companyId = 5L;
+
+        doReturn(companyId).when(existingCompany).getId();
+        doReturn(ownerId).when(newOwner).getId();
+        doReturn(Optional.of(newOwner)).when(ownerRepository).findById(eq(ownerId));
+        doReturn(Optional.of(existingCompany)).when(companyRepository).findByNameAndCountry(isA(String.class), isA(String.class));
+        doReturn(Optional.of(existingCompany)).when(companyRepository).findById(isA(Long.class));
+
+        service.update(companyId, CompanyDataFixtures.fromCompany(company));
+    }
+
+    @Test
     public void whenUpdatingCompanyWithDuplicateNameAndCountryThenThrowException() {
         final Company company = spy(CompanyDataFixtures.company());
         final long companyId = 5L;
