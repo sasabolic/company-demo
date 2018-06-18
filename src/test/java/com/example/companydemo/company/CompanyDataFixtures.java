@@ -66,4 +66,16 @@ public class CompanyDataFixtures {
                 "+16506815000",
                 ownerIds);
     }
+
+    public static String json() {
+        return "{\n" +
+                "  \"name\": \"Tesla\",\n" +
+                "  \"address\": \"3500 Deer Creek Road, CA 94304\",\n" +
+                "  \"city\": \"Palo Alto\",\n" +
+                "  \"country\": \"USA\",\n" +
+                "  \"email\": \"office@tesla.com\",\n" +
+                "  \"phone_number\": \"+16506815000\",\n" +
+                "  \"owners\": [1, 2]\n" +
+                "}";
+    }
 }
