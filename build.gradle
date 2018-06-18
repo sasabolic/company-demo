@@ -29,6 +29,7 @@ dependencies {
 	compileOnly('org.projectlombok:lombok')
 
 	// database
+	compile('mysql:mysql-connector-java')
 	compile('javax.xml.bind:jaxb-api')
 	compile('org.liquibase:liquibase-core')
 
