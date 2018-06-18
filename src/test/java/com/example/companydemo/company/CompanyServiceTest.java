@@ -2,6 +2,7 @@ package com.example.companydemo.company;
 
 import com.example.companydemo.owner.Owner;
 import com.example.companydemo.owner.OwnerDataFixtures;
+import com.example.companydemo.owner.OwnerRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -10,14 +11,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.spy;
 
 @RunWith(SpringRunner.class)
 public class CompanyServiceTest {
@@ -27,12 +29,15 @@ public class CompanyServiceTest {
     @Mock
     private static CompanyRepository companyRepository;
 
+    @Mock
+    private static OwnerRepository ownerRepository;
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Before
     public void setUp() {
-        service = new DefaultCompanyService(companyRepository);
+        service = new DefaultCompanyService(companyRepository, ownerRepository);
     }
 
     @Test
@@ -70,11 +75,13 @@ public class CompanyServiceTest {
     @Test
     public void whenCreatingCompanyThenReturnCompany() {
         final String name = "Tesla";
-        final List<Owner> owners = Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"));
+        final Owner owner = OwnerDataFixtures.owner("Elon Musk");
+        final List<Owner> owners = Collections.singletonList(owner);
 
+        doReturn(Optional.of(owner)).when(ownerRepository).findById(eq(1L));
         doReturn(CompanyDataFixtures.companyWithNameAndOwners(name, owners)).when(companyRepository).save(isA(Company.class));
 
-        final Company result = service.save(CompanyDataFixtures.companyWithNameAndOwners(name, owners));
+        final Company result = service.save(CompanyDataFixtures.companyInfoWithNameAndOwnerIds(name, Arrays.asList(1L)));
 
         assertThat(result).isNotNull();
         assertThat(result).hasFieldOrPropertyWithValue("name", name);
@@ -82,16 +89,40 @@ public class CompanyServiceTest {
     }
 
     @Test
+    public void whenCreatingCompanyWithNonExistingOwnersThenThrowException() {
+        final String name = "Tesla";
+
+        doReturn(Optional.ofNullable(null)).when(ownerRepository).findById(anyLong());
+
+        Company result = null;
+        try {
+            result = service.save(CompanyDataFixtures.companyInfoWithNameAndOwnerIds(name, Arrays.asList(1L)));
+        } catch (CompanyException ex) {
+            assertThat(ex).isNotNull();
+            assertThat(ex.isEmpty()).isFalse();
+            assertThat(ex.getExceptions()).hasSize(1);
+            assertThat(ex.getExceptions()).extracting(Exception::getMessage)
+                    .containsExactly(
+                            "Owner with id '1' does not exist"
+                    );
+        }
+
+        assertThat(result).isNull();
+    }
+
+    @Test
     public void whenUpdatingCompanyThenReturnCompany() {
         final String name = "Tesla";
         final List<Owner> owners = Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"));
         final String newName = "New Tesla";
-        final List<Owner> newOwners = Collections.singletonList(OwnerDataFixtures.owner("Jian Yang"));
+        final Owner newOwner = OwnerDataFixtures.owner("Jian Yang");
+        final List<Owner> newOwners = Collections.singletonList(newOwner);
 
+        doReturn(Optional.of(newOwner)).when(ownerRepository).findById(eq(2L));
         doReturn(Optional.of(CompanyDataFixtures.companyWithNameAndOwners(name, owners))).when(companyRepository).findById(isA(Long.class));
         doReturn(CompanyDataFixtures.companyWithNameAndOwners(newName, newOwners)).when(companyRepository).save(isA(Company.class));
 
-        final Company result = service.update(5L, CompanyDataFixtures.companyWithNameAndOwners(newName, newOwners));
+        final Company result = service.update(5L, CompanyDataFixtures.companyInfoWithNameAndOwnerIds(newName, Arrays.asList(2L)));
 
         assertThat(result).isNotNull();
         assertThat(result).hasFieldOrPropertyWithValue("name", newName);
@@ -108,6 +139,35 @@ public class CompanyServiceTest {
 
         doReturn(Optional.ofNullable(null)).when(companyRepository).findById(isA(Long.class));
 
-        service.update(companyId, company);
+        service.update(companyId, CompanyDataFixtures.companyInfoWithNameAndOwnerIds("Tesla", Arrays.asList(1L)));
+    }
+
+    @Test
+    public void whenUpdatingCompanyWithNonExistingOwnersThenThrowException() {
+        final String name = "Tesla";
+        final long companyId = 1L;
+        final Company company = spy(CompanyDataFixtures.company());
+
+        doReturn(companyId).when(company).getId();
+        doReturn(Optional.of(company)).when(companyRepository).findById(anyLong());
+
+        doReturn(Optional.ofNullable(null)).when(ownerRepository).findById(anyLong());
+
+        Company result = null;
+        try {
+            result = service.update(companyId, CompanyDataFixtures.companyInfoWithNameAndOwnerIds(name, Arrays.asList(1L)));
+        } catch (CompanyException ex) {
+            assertThat(ex).isNotNull();
+            assertThat(ex.isEmpty()).isFalse();
+            assertThat(ex.getExceptions()).hasSize(1);
+            assertThat(ex.getExceptions()).extracting(Exception::getMessage)
+                    .containsExactly(
+                            "Owner with id '1' does not exist"
+                    );
+        }
+
+        assertThat(result).isNull();
+
+        assertThat(result).isNull();
     }
 }

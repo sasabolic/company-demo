@@ -6,6 +6,7 @@ import com.example.companydemo.owner.OwnerDataFixtures;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CompanyDataFixtures {
 
@@ -55,5 +56,15 @@ public class CompanyDataFixtures {
                 companyWithNameAndOwners("Tesla", Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"))),
                 companyWithNameAndOwners("BMW", Collections.singletonList(OwnerDataFixtures.owner("Richard Hendricks"))),
                 companyWithNameAndOwners("Mercedes", Collections.singletonList(OwnerDataFixtures.owner("Erlich Bachman"))));
+    }
+
+    public static CompanyInfo companyInfoWithNameAndOwnerIds(String name, List<Long> ownerIds) {
+        return new CompanyInfo(name,
+                "3500 Deer Creek Road, CA 94304",
+                "Palo Alto",
+                "USA",
+                "office@tesla.com",
+                "+16506815000",
+                ownerIds);
     }
 }

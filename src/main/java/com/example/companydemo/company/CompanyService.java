@@ -25,12 +25,12 @@ public interface CompanyService {
     Company findById(Long id);
 
     /**
-     * Creates new {@code Film} with given values.
+     * Creates new {@code Company} with given values.
      *
      * @param company the company
      * @return the company
      */
-    Company save(Company company);
+    Company save(CompanyInfo company);
 
     /**
      * Updates {@code Customer} with given values.
@@ -39,6 +39,6 @@ public interface CompanyService {
      * @param company the company
      * @return the company
      */
-    Company update(Long id, Company company);
+    Company update(Long id, CompanyInfo company);
 
 }
