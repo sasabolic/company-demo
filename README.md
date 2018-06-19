@@ -53,6 +53,10 @@ After you have run the `./run.sh` for the first time, all of the services will b
 
     ./gradlew clean test
     
+## Running the integration tests
+
+    ./gradlew clean integrationTest
+    
 ## API Reference
 
 API reference documentation is available at http://localhost:8080/swagger-ui.html.
@@ -102,11 +106,11 @@ Example API calls for the company and owner resource (the database is prepopulat
     
         Header:
             Status: 201 Created
-            Location: http://localhost:8080/companies/1
+            Location: http://localhost:8080/companies/3
         Body:
         
     
-* To get details of company with id '1' 
+* To get details of company with id '3' 
 
     Request:
     
@@ -153,24 +157,24 @@ Example API calls for the company and owner resource (the database is prepopulat
             [
                 {
                     "id": 1,
-                    "name": "GUBI A/S",
-                    "address": "Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen",
-                    "city": "Copenhagen",
-                    "country": "Denmark"
-                },
-                {
-                    "id": 2,
-                    "name": "Tesla",
-                    "address": "3500 Deer Creek Road, CA 94304",
-                    "city": "Palo Alto",
-                    "country": "USA"
-                },
-                {
-                    "id": 3,
                     "name": "Telenor ASA",
                     "address": "Snarøyveien 30, N-1360 Fornebu, Norway",
                     "city": "Oslo",
                     "country": "Norway"
+                },
+                {
+                    "id": 2,
+                    "name": "Apple",
+                    "address": "One Apple Park Way, CA 95014",
+                    "city": "Cupertino",
+                    "country": "USA"
+                },
+                {
+                    "id": 3,
+                    "name": "GUBI A/S",
+                    "address": "Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen",
+                    "city": "Copenhagen",
+                    "country": "Denmark"
                 }
             ]
 
@@ -178,7 +182,7 @@ Example API calls for the company and owner resource (the database is prepopulat
 
     Request:
     
-        curl -X PUT "http://localhost:8080/companies/1" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"GUBI A/S\", \"address\": \"Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen\", \"city\": \"Copenhagen\", \"country\": \"Denmark\", \"email\": \"new_office@gubi.com\", \"phone_number\": \"+45 3332 6368\", \"owners\": [ 1 ]}"
+        curl -X PUT "http://localhost:8080/companies/3" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"GUBI A/S\", \"address\": \"Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen\", \"city\": \"Copenhagen\", \"country\": \"Denmark\", \"email\": \"new_office@gubi.com\", \"phone_number\": \"+45 3332 6368\", \"owners\": [ 1 ]}"
 
     Response:
     
@@ -212,7 +216,55 @@ Example API calls for the company and owner resource (the database is prepopulat
               "message": "Company with id '4' does not exist",
               "errors": null
             }
+   
+* Create non-unique company (in case company with same name already exists): 
+
+    Request:
     
+        curl -X POST "http://localhost:8080/companies" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"GUBI A/S\", \"address\": \"Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen\", \"city\": \"Copenhagen\", \"country\": \"Denmark\", \"email\": \"office@gubi.com\", \"phone_number\": \"+45 3332 6368\", \"owners\": [ 1 ]}"
+
+    Response:
+    
+        
+        Header:
+            Status: 409 Conflict
+           
+        Body:
+        
+            {
+              "timestamp": "2018-06-18T12:57:20.2568",
+              "status": 409,
+              "error": "Conflict",
+              "exception": "com.example.companydemo.company.CompanyUniqueViolationException",
+              "message": "Company with name 'GUBI A/S' located in 'Denmark' already exits",
+              "errors": null
+            }
+    
+* Create company where required fields are missing (failed validation): 
+
+    Request:
+    
+        curl -X POST "http://localhost:8080/companies" -H "accept: */*" -H "Content-Type: application/json" -d "{ \"name\": \"\", \"address\": \"Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen\", \"city\": \"Copenhagen\", \"country\": \"Denmark\", \"email\": \"office@gubi.com\", \"phone_number\": \"+45 3332 6368\", \"owners\": [ 1 ]}"
+
+    Response:
+    
+        
+        Header:
+            Status: 400 Bad Request
+           
+        Body:
+        
+            {
+              "timestamp": "2018-06-18T12:57:20.2568",
+              "status": 400,
+              "error": "Bad Request",
+              "exception": "org.springframework.web.bind.MethodArgumentNotValidException",
+              "message": "Validation failed",
+              "errors": [
+                "Name cannot be empty"
+              ]
+            }
+     
 
 ## Built With
 
