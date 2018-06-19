@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -32,8 +33,8 @@ public class OwnerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OwnerResponse>> getAll() {
-        final List<Owner> owners = this.ownerService.findAll();
+    public ResponseEntity<List<OwnerResponse>> getAll(@RequestParam(required = false) String name) {
+        final List<Owner> owners = this.ownerService.findAll(name);
 
         return ResponseEntity.ok(this.ownerResponseAssembler.of(owners));
     }

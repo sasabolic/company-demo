@@ -12,8 +12,9 @@ public interface OwnerService {
     /**
      * Returns list of {@code Owner}.
      *
+     * @param name the name of owner
      * @return the list
      */
-    List<Owner> findAll();
+    List<Owner> findAll(String name);
 
 }

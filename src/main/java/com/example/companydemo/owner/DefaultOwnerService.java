@@ -21,8 +21,11 @@ public class DefaultOwnerService implements OwnerService {
     }
 
     @Override
-    public List<Owner> findAll() {
-        return this.ownerRepository.findAll();
+    public List<Owner> findAll(String name) {
+        if (name == null) {
+            return this.ownerRepository.findAll();
+        }
+        return this.ownerRepository.findByName(name);
     }
 
 }

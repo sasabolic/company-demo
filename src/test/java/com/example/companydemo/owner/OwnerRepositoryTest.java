@@ -23,4 +23,20 @@ public class OwnerRepositoryTest {
 
         assertThat(result).isNotEmpty();
     }
+
+    @Test
+    public void whenSearchByNameThenReturnListContainingThatName() {
+        final List<Owner> result = repository.findByName("el");
+
+        assertThat(result).isNotEmpty();
+        assertThat(result).hasSize(2);
+        assertThat(result).extracting(Owner::getName).containsExactly("Elon Musk", "Gavin Belson");
+    }
+
+    @Test
+    public void whenSearchByNonExistingNameThenReturnEmptyList() {
+        final List<Owner> result = repository.findByName("non-existing");
+
+        assertThat(result).isEmpty();
+    }
 }

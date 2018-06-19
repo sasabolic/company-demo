@@ -6,9 +6,11 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 
 @RunWith(SpringRunner.class)
@@ -28,11 +30,22 @@ public class OwnerServiceTest {
     public void whenFindAllThenReturnListOfCustomers() {
         doReturn(OwnerDataFixtures.owners()).when(ownerRepository).findAll();
 
-        final List<Owner> result = service.findAll();
+        final List<Owner> result = service.findAll(null);
 
         assertThat(result).isNotNull();
         assertThat(result).isNotEmpty();
         assertThat(result).hasSize(3);
     }
 
+    @Test
+    public void whenFindingAllByNameThenReturnListOfFilmsContainingName() {
+        doReturn(Arrays.asList(OwnerDataFixtures.owner("Elon Musk"))).when(ownerRepository).findByName(isA(String.class));
+
+        final List<Owner> result = service.findAll("elo");
+
+        assertThat(result).isNotNull();
+        assertThat(result).isNotEmpty();
+        assertThat(result).hasSize(1);
+        assertThat(result).extracting(Owner::getName).containsOnly("Elon Musk");
+    }
 }
