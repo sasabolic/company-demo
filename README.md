@@ -94,6 +94,25 @@ Example API calls for the company and owner resource (the database is prepopulat
               }
             ]
 
+* To search for owners with name containing string: 'el': 
+
+    Request:
+    
+        curl -X GET "http://localhost:8080/owners?name=el" -H "accept: */*"
+
+    Response:
+    
+        [
+            {
+                "id": 1,
+                "name": "Elon Musk"
+            },
+            {
+                "id": 3,
+                "name": "Gavin Belson"
+            }
+        ]
+    
 
 * To create new company: 
 
