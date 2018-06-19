@@ -89,4 +89,16 @@ public class CompanyDataFixtures {
                 "  \"owners\": [1, 2]\n" +
                 "}";
     }
+
+    public static String json(String name, String country) {
+        return "{\n" +
+                "  \"name\": \"" + name + "\",\n" +
+                "  \"address\": \"3500 Deer Creek Road, CA 94304\",\n" +
+                "  \"city\": \"Palo Alto\",\n" +
+                "  \"country\": \"" + country + "\",\n" +
+                "  \"email\": \"office@tesla.com\",\n" +
+                "  \"phone_number\": \"+16506815000\",\n" +
+                "  \"owners\": [1, 2]\n" +
+                "}";
+    }
 }

@@ -76,6 +76,8 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenFindAllThenReturnCorrectResult() {
+        Long before = repository.count();
+
         entityManager.persist(CompanyDataFixtures.companyWithName("Tesla"));
         entityManager.persist(CompanyDataFixtures.companyWithName("BMW"));
         entityManager.persist(CompanyDataFixtures.companyWithName("Audi"));
@@ -84,7 +86,7 @@ public class CompanyRepositoryTest {
         final List<Company> result = repository.findAll();
 
         assertThat(result).isNotEmpty();
-        assertThat(result).hasSize(3);
+        assertThat(result).hasSize(before.intValue() + 3);
     }
 
     @Test
