@@ -14,7 +14,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public interface CompanyRepository extends JpaRepository<Company, Long> {
 
-    @Query("SELECT c FROM Company c LEFT JOIN FETCH c.owners WHERE c.id = ?1")
+    @Query("SELECT c FROM Company c LEFT JOIN FETCH c.owners o WHERE c.id = ?1")
     @Override
     Optional<Company> findById(Long id);
 

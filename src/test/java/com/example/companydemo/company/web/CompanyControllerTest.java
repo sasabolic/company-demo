@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -128,7 +129,7 @@ public class CompanyControllerTest {
         final String email = "office@newtest.com";
         final String phoneNumber = "+381999999999";
         final String ownerName = "Petar Petrovic";
-        final List<Owner> owners = Collections.singletonList(OwnerDataFixtures.owner(ownerName));
+        final Set<Owner> owners = Collections.singleton(OwnerDataFixtures.owner(ownerName));
         final long companyId = 1L;
         final Company company = spy(CompanyDataFixtures.company(name, address, city, country, email, phoneNumber, owners));
 

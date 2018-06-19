@@ -3,7 +3,7 @@ package com.example.companydemo.company;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Company information.
@@ -20,5 +20,5 @@ public class CompanyInfo {
     private String country;
     private String email;
     private String phoneNumber;
-    private List<Long> ownerIds;
+    private Set<Long> ownerIds;
 }

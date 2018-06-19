@@ -9,6 +9,7 @@ import lombok.Getter;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Save company request DTO.
@@ -37,7 +38,7 @@ public class SaveCompanyRequest {
     private String phoneNumber;
 
     @NotEmpty(message = "Owners list cannot be empty")
-    private List<Long> ownerIds;
+    private Set<Long> ownerIds;
 
     @JsonCreator
     public SaveCompanyRequest(@JsonProperty("name") String name,
@@ -46,7 +47,7 @@ public class SaveCompanyRequest {
                               @JsonProperty("country") String country,
                               @JsonProperty("email") String email,
                               @JsonProperty("phone_number") String phoneNumber,
-                              @JsonProperty("owners") List<Long> ownerIds) {
+                              @JsonProperty("owners") Set<Long> ownerIds) {
         this.name = name;
         this.address = address;
         this.city = city;

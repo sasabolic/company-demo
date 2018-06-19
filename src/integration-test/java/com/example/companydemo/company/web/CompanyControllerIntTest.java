@@ -2,17 +2,11 @@ package com.example.companydemo.company.web;
 
 import com.example.companydemo.AbstractWebIntTest;
 import com.example.companydemo.company.CompanyDataFixtures;
-import com.example.companydemo.company.CompanyInfo;
-import com.example.companydemo.company.CompanyUniqueViolationException;
 import org.junit.Test;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -46,21 +40,22 @@ public class CompanyControllerIntTest extends AbstractWebIntTest {
 
     @Test
     public void whenGetByIdThenReturnResult() throws Exception {
-        mvc.perform(get("/companies/{companyId}", 1L)
+        mvc.perform(get("/companies/{companyId}", 2L)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(jsonPath("$").exists())
-                .andExpect(jsonPath("$.name", equalTo("Telenor ASA")))
-                .andExpect(jsonPath("$.address", equalTo("Snarøyveien 30, N-1360 Fornebu, Norway")))
-                .andExpect(jsonPath("$.city", equalTo("Oslo")))
-                .andExpect(jsonPath("$.country", equalTo("Norway")))
-                .andExpect(jsonPath("$.email", equalTo("office@telenor.com")))
-                .andExpect(jsonPath("$.phone_number", equalTo("+47 678 90 000")))
+                .andExpect(jsonPath("$.name", equalTo("Apple")))
+                .andExpect(jsonPath("$.address", equalTo("One Apple Park Way, CA 95014")))
+                .andExpect(jsonPath("$.city", equalTo("Cupertino")))
+                .andExpect(jsonPath("$.country", equalTo("USA")))
+                .andExpect(jsonPath("$.email", equalTo("office@apple.com")))
+                .andExpect(jsonPath("$.phone_number", equalTo("(408) 996–1010")))
                 .andExpect(jsonPath("$.owners").isArray())
-                .andExpect(jsonPath("$.owners", hasSize(1)))
-                .andExpect(jsonPath("$.owners[0].name", equalTo("Elon Musk")));
+                .andExpect(jsonPath("$.owners", hasSize(2)))
+                .andExpect(jsonPath("$.owners[0].name", equalTo("Richard Hendricks")))
+                .andExpect(jsonPath("$.owners[1].name", equalTo("Gavin Belson")));
     }
 
     @Test

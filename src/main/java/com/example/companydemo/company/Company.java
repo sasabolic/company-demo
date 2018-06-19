@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Company entity.
@@ -44,9 +42,10 @@ public class Company {
             joinColumns = { @JoinColumn(name = "company_id") },
             inverseJoinColumns = { @JoinColumn(name = "owner_id") }
     )
-    List<Owner> owners = new ArrayList<>();
+    @OrderBy(value = "id")
+    Set<Owner> owners = new HashSet<>();
 
-    public Company(String name, String address, String city, String country, String email, String phoneNumber, List<Owner> owners) {
+    public Company(String name, String address, String city, String country, String email, String phoneNumber, Set<Owner> owners) {
         Objects.requireNonNull(name, "Companies' name cannot be null!");
         Objects.requireNonNull(address, "Companies' address cannot be null!");
         Objects.requireNonNull(city, "Companies' city cannot be null!");
@@ -66,7 +65,7 @@ public class Company {
         this.owners = owners;
     }
 
-    public void update(String name, String address, String city, String country, String email, String phoneNumber, List<Owner> owners) {
+    public void update(String name, String address, String city, String country, String email, String phoneNumber, Set<Owner> owners) {
         Objects.requireNonNull(name, "Companies' name cannot be null!");
         Objects.requireNonNull(address, "Companies' address cannot be null!");
         Objects.requireNonNull(city, "Companies' city cannot be null!");

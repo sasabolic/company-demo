@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Implementation of {@link CompanyService}.
@@ -44,7 +46,7 @@ public class DefaultCompanyService implements CompanyService {
                     throw new CompanyUniqueViolationException(String.format("Company with name '%s' located in '%s' already exits", company.getName(), company.getCountry()));
                 });
 
-        final List<Owner> owners = findOwners(company.getOwnerIds(), "Could not create new company");
+        final Set<Owner> owners = findOwners(company.getOwnerIds(), "Could not create new company");
 
         return this.companyRepository.save(new Company(company.getName(), company.getAddress(), company.getCity(), company.getCountry(), company.getEmail(), company.getPhoneNumber(), owners));
     }
@@ -60,16 +62,16 @@ public class DefaultCompanyService implements CompanyService {
         final Company currentCompany = this.companyRepository.findById(id)
                 .orElseThrow(() -> new CompanyNotFoundException(String.format("Company with id '%d' does not exist", id)));
 
-        final List<Owner> owners = findOwners(company.getOwnerIds(), "Could not update new company");
+        final Set<Owner> owners = findOwners(company.getOwnerIds(), "Could not update new company");
 
         currentCompany.update(company.getName(), company.getAddress(), company.getCity(), company.getCountry(), company.getEmail(), company.getPhoneNumber(), owners);
 
         return this.companyRepository.save(currentCompany);
     }
 
-    private List<Owner> findOwners(List<Long> ownerIds, String errorMessage) {
+    private Set<Owner> findOwners(Set<Long> ownerIds, String errorMessage) {
         List<Exception> exceptions = new ArrayList<>();
-        List<Owner> owners = new ArrayList<>();
+        Set<Owner> owners = new HashSet<>();
         ownerIds.forEach(ownerId -> {
             try {
                 final Owner owner = ownerRepository.findById(ownerId)

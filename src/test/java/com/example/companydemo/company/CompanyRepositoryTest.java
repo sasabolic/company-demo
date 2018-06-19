@@ -9,7 +9,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -48,7 +52,9 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenSaveThenReturnCorrectResult() {
-        final Company company = CompanyDataFixtures.company();
+        final Owner owner = entityManager.find(Owner.class, 1L);
+
+        final Company company = CompanyDataFixtures.companyWithOwners(Stream.of(owner, owner, owner).collect(Collectors.toSet()));
 
         final Company result = repository.save(company);
 
@@ -64,7 +70,7 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenSaveWithMultipleOwnersThenReturnCorrectResult() {
-        final List<Owner> owners = OwnerDataFixtures.owners();
+        final Set<Owner> owners = OwnerDataFixtures.owners().stream().collect(Collectors.toSet());
         final Company company = CompanyDataFixtures.companyWithOwners(owners);
 
         final Company result = repository.save(company);
