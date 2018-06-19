@@ -60,6 +60,10 @@
     <changeSet id="2" author="sasa.bolic">
         <loadData file="db/changelog/data/owner_values.csv"
                   tableName="owner"/>
+        <loadData file="db/changelog/data/company_values.csv"
+                  tableName="company"/>
+        <loadData file="db/changelog/data/company_owner_values.csv"
+                  tableName="company_owner"/>
     </changeSet>
 
 </databaseChangeLog>
