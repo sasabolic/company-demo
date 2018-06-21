@@ -34,7 +34,7 @@ public class SaveCompanyRequest {
     @Email(message = "Value must be a well-formed email address")
     private String email;
 
-    @Phone(message = "Value must be a well-formed phone number")
+    @Phone(message = "Phone number value should start with '+' and contain 7 to 15 digits")
     private String phoneNumber;
 
     @NotEmpty(message = "Owners list cannot be empty")
