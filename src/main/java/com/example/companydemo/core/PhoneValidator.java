@@ -20,10 +20,6 @@ public class PhoneValidator implements ConstraintValidator<Phone, String> {
 			return true;
 		}
 
-        if (phoneNumber.matches("^\\+(?:[0-9] ?){6,14}[0-9]$")) {
-			return true;
-		}
-
-        return false;
+		return phoneNumber.matches("^\\+(?:[0-9] ?){6,14}[0-9]$");
 	}
 }
