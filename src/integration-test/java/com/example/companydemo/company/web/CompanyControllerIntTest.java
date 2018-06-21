@@ -69,7 +69,7 @@ public class CompanyControllerIntTest extends AbstractWebIntTest {
                 .andExpect(jsonPath("$").exists())
                 .andExpect(jsonPath("$.timestamp").exists())
                 .andExpect(jsonPath("$.status", equalTo(404)))
-                .andExpect(jsonPath("$.message", equalTo("Company with id '" + companyId + "' does not exist")));;
+                .andExpect(jsonPath("$.message", equalTo("Company with id '" + companyId + "' does not exist")));
 
     }
 
