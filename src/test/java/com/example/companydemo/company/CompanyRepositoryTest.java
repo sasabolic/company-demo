@@ -9,7 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -70,7 +70,7 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenSaveWithMultipleOwnersThenReturnCorrectResult() {
-        final Set<Owner> owners = OwnerDataFixtures.owners().stream().collect(Collectors.toSet());
+        final Set<Owner> owners = new HashSet<>(OwnerDataFixtures.owners());
         final Company company = CompanyDataFixtures.companyWithOwners(owners);
 
         final Company result = repository.save(company);

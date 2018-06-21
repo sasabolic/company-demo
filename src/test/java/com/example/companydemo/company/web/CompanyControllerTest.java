@@ -23,7 +23,6 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.equalTo;
