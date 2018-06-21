@@ -283,7 +283,22 @@ Example API calls for the company and owner resource (the database is prepopulat
                 "Name cannot be empty"
               ]
             }
-     
+
+## Considerations
+
+The security layer has not been implemented for this demo project. 
+
+For securing the service the OAuth authorization flow can be used, together with the JWT access token.
+
+OAuth's authorization server would contain user identities and credentials and through it
+client applications (web, desktop, mobile etc.) could obtain authorization to access the resources stored in our demo application (resource server).
+By using JWT we can easily share authentication and authorization information between multiple service in our micro-service stack. With JWT there 
+is no need of keeping track of user sessions in the distributed cache or database, which can significantly reduce costs of the cloud stack. 
+
+For achieving the high availability of the service, the service gateway (e.g. Zuul) and service discovery (e.g. Eureka) could be used.
+Each instance of the demo project service will register itself with the Eureka server. Clients using the service will access it through
+Zuul gateway, which will provide the routing, resiliency, security etc. If for any reason one of the instances of the demo project crashes, 
+the Zuul will delegate the client calls to the rest of the healthy instances. Where failure is inevitable circuit breaker (e.g Hystrix) to enable resilience and fault tolerance to distributed systems.
 
 ## Built With
 
