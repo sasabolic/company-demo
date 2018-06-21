@@ -33,7 +33,7 @@ public interface CompanyService {
     Company save(CompanyInfo company);
 
     /**
-     * Updates {@code Customer} with given values.
+     * Updates {@code Company} with given values.
      *
      * @param id      the id
      * @param company the company

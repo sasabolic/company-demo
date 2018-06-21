@@ -45,7 +45,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler({CompanyException.class})
-    protected ResponseEntity<Object> handleRentalException(CompanyException ex) {
+    protected ResponseEntity<Object> handleCompanyException(CompanyException ex) {
         RestError restError = RestError.of(HttpStatus.BAD_REQUEST, ex, ex.getMessage());
         restError.addErrors(ex.getExceptions());
 

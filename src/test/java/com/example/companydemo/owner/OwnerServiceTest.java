@@ -27,7 +27,7 @@ public class OwnerServiceTest {
     }
 
     @Test
-    public void whenFindAllThenReturnListOfCustomers() {
+    public void whenFindAllThenReturnListOfOwners() {
         doReturn(OwnerDataFixtures.owners()).when(ownerRepository).findAll();
 
         final List<Owner> result = service.findAll(null);
@@ -38,7 +38,7 @@ public class OwnerServiceTest {
     }
 
     @Test
-    public void whenFindingAllByNameThenReturnListOfFilmsContainingName() {
+    public void whenFindingAllByNameThenReturnListOfOwnersContainingName() {
         doReturn(Arrays.asList(OwnerDataFixtures.owner("Elon Musk"))).when(ownerRepository).findByName(isA(String.class));
 
         final List<Owner> result = service.findAll("elo");

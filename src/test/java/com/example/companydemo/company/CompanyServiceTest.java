@@ -40,7 +40,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    public void whenFindAllThenReturnListOfCustomers() {
+    public void whenFindAllThenReturnListOfCompaniess() {
         doReturn(CompanyDataFixtures.companies()).when(companyRepository).findAll();
 
         final List<Company> result = service.findAll();
@@ -61,14 +61,14 @@ public class CompanyServiceTest {
 
     @Test
     public void whenFindByNonExistingIdThenThrowException() {
-        final long customerId = 1L;
+        final long companyId = 1L;
 
         thrown.expect(CompanyNotFoundException.class);
-        thrown.expectMessage("Company with id '" + customerId + "' does not exist");
+        thrown.expectMessage("Company with id '" + companyId + "' does not exist");
 
         doReturn(Optional.ofNullable(null)).when(companyRepository).findById(isA(Long.class));
 
-        service.findById(customerId);
+        service.findById(companyId);
     }
 
     @Test
