@@ -91,7 +91,7 @@ public class CompanyServiceTest {
     public void whenCreatingCompanyWithNonExistingOwnersThenThrowException() {
         final String name = "Tesla";
 
-        doReturn(Optional.ofNullable(null)).when(ownerRepository).findById(anyLong());
+        doReturn(Optional.empty()).when(ownerRepository).findById(anyLong());
 
         Company result = null;
         try {
