@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -101,16 +102,16 @@ public class CompanyRepositoryTest {
         entityManager.persist(company);
         entityManager.flush();
 
-        final Company result = repository.findById(company.getId()).get();
+        final Optional<Company> result = repository.findById(company.getId());
 
-        assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo(company.getName());
-        assertThat(result.getAddress()).isEqualTo(company.getAddress());
-        assertThat(result.getCity()).isEqualTo(company.getCity());
-        assertThat(result.getCountry()).isEqualTo(company.getCountry());
-        assertThat(result.getEmail()).isEqualTo(company.getEmail());
-        assertThat(result.getPhoneNumber()).isEqualTo(company.getPhoneNumber());
-        assertThat(result.getOwners()).isEqualTo(company.getOwners());
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getName()).isEqualTo(company.getName());
+        assertThat(result.get().getAddress()).isEqualTo(company.getAddress());
+        assertThat(result.get().getCity()).isEqualTo(company.getCity());
+        assertThat(result.get().getCountry()).isEqualTo(company.getCountry());
+        assertThat(result.get().getEmail()).isEqualTo(company.getEmail());
+        assertThat(result.get().getPhoneNumber()).isEqualTo(company.getPhoneNumber());
+        assertThat(result.get().getOwners()).isEqualTo(company.getOwners());
     }
 
     @Test
@@ -119,16 +120,16 @@ public class CompanyRepositoryTest {
         entityManager.persist(company);
         entityManager.flush();
 
-        final Company result = repository.findByNameAndCountry("tesla", "usa").get();
+        final Optional<Company> result = repository.findByNameAndCountry("tesla", "usa");
 
-        assertThat(result).isNotNull();
-        assertThat(result.getName()).isEqualTo(company.getName());
-        assertThat(result.getAddress()).isEqualTo(company.getAddress());
-        assertThat(result.getCity()).isEqualTo(company.getCity());
-        assertThat(result.getCountry()).isEqualTo(company.getCountry());
-        assertThat(result.getEmail()).isEqualTo(company.getEmail());
-        assertThat(result.getPhoneNumber()).isEqualTo(company.getPhoneNumber());
-        assertThat(result.getOwners()).isEqualTo(company.getOwners());
+        assertThat(result.isPresent()).isTrue();
+        assertThat(result.get().getName()).isEqualTo(company.getName());
+        assertThat(result.get().getAddress()).isEqualTo(company.getAddress());
+        assertThat(result.get().getCity()).isEqualTo(company.getCity());
+        assertThat(result.get().getCountry()).isEqualTo(company.getCountry());
+        assertThat(result.get().getEmail()).isEqualTo(company.getEmail());
+        assertThat(result.get().getPhoneNumber()).isEqualTo(company.getPhoneNumber());
+        assertThat(result.get().getOwners()).isEqualTo(company.getOwners());
     }
 
 }

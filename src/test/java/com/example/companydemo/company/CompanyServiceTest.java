@@ -66,7 +66,7 @@ public class CompanyServiceTest {
         thrown.expect(CompanyNotFoundException.class);
         thrown.expectMessage("Company with id '" + companyId + "' does not exist");
 
-        doReturn(Optional.ofNullable(null)).when(companyRepository).findById(isA(Long.class));
+        doReturn(Optional.empty()).when(companyRepository).findById(isA(Long.class));
 
         service.findById(companyId);
     }

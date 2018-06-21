@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -39,7 +40,7 @@ public class OwnerServiceTest {
 
     @Test
     public void whenFindingAllByNameThenReturnListOfOwnersContainingName() {
-        doReturn(Arrays.asList(OwnerDataFixtures.owner("Elon Musk"))).when(ownerRepository).findByName(isA(String.class));
+        doReturn(Collections.singletonList(OwnerDataFixtures.owner("Elon Musk"))).when(ownerRepository).findByName(isA(String.class));
 
         final List<Owner> result = service.findAll("elo");
 

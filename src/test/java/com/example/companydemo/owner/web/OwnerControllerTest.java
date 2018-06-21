@@ -88,7 +88,7 @@ public class OwnerControllerTest {
         final Owner owner = spy(OwnerDataFixtures.owner("Elon Musk"));
 
         given(owner.getId()).willReturn(ownerId);
-        given(this.ownerService.findAll(name)).willReturn(Arrays.asList(owner));
+        given(this.ownerService.findAll(name)).willReturn(Collections.singletonList(owner));
 
         final MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get("/owners?name={name}", name)
