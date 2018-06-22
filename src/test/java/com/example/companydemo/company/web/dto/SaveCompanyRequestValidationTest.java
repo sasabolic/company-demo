@@ -88,7 +88,7 @@ public class SaveCompanyRequestValidationTest {
 
         assertThat(validate).isNotEmpty();
         assertThat(validate).hasSize(1);
-        assertThat(validate).extracting(ConstraintViolation::getMessage).containsOnly("Value must be a well-formed phone number");
+        assertThat(validate).extracting(ConstraintViolation::getMessage).containsOnly("Phone number value should start with '+' and contain 7 to 15 digits");
     }
 
     @Test
