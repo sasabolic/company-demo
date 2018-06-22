@@ -46,15 +46,7 @@ public class Company {
     Set<Owner> owners = new HashSet<>();
 
     public Company(String name, String address, String city, String country, String email, String phoneNumber, Set<Owner> owners) {
-        Objects.requireNonNull(name, "Companies' name cannot be null!");
-        Objects.requireNonNull(address, "Companies' address cannot be null!");
-        Objects.requireNonNull(city, "Companies' city cannot be null!");
-        Objects.requireNonNull(country, "Companies' country cannot be null!");
-        Objects.requireNonNull(owners, "Companies' list of owners cannot be null!");
-
-        if (owners.isEmpty()) {
-            throw new IllegalArgumentException("Companies' list of owners cannot be empty!");
-        }
+        validate(name, address, city, country, owners);
 
         this.name = name;
         this.address = address;
@@ -66,15 +58,7 @@ public class Company {
     }
 
     public void update(String name, String address, String city, String country, String email, String phoneNumber, Set<Owner> owners) {
-        Objects.requireNonNull(name, "Companies' name cannot be null!");
-        Objects.requireNonNull(address, "Companies' address cannot be null!");
-        Objects.requireNonNull(city, "Companies' city cannot be null!");
-        Objects.requireNonNull(country, "Companies' country cannot be null!");
-        Objects.requireNonNull(owners, "Companies' list of owners cannot be null!");
-
-        if (owners.isEmpty()) {
-            throw new IllegalArgumentException("Companies' list of owners cannot be empty!");
-        }
+        validate(name, address, city, country, owners);
 
 
         this.name = name;
@@ -84,5 +68,17 @@ public class Company {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.owners = owners;
+    }
+
+    private void validate(String name, String address, String city, String country, Set<Owner> owners) {
+        Objects.requireNonNull(name, "Companies' name cannot be null!");
+        Objects.requireNonNull(address, "Companies' address cannot be null!");
+        Objects.requireNonNull(city, "Companies' city cannot be null!");
+        Objects.requireNonNull(country, "Companies' country cannot be null!");
+        Objects.requireNonNull(owners, "Companies' list of owners cannot be null!");
+
+        if (owners.isEmpty()) {
+            throw new IllegalArgumentException("Companies' list of owners cannot be empty!");
+        }
     }
 }
