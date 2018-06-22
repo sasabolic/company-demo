@@ -63,7 +63,7 @@ API reference documentation is available at http://localhost:8080/swagger-ui.htm
 
 ### Example API Calls
 
-Example API calls for the company and owner resource (the database is prepopulated with owners data):
+Example API calls for the company and owner resource (the database is prepopulated with owners and company data):
 
 * To return all owners: 
 
