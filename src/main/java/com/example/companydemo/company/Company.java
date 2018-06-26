@@ -36,7 +36,7 @@ public class Company {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     @JoinTable(
             name = "company_owner",
             joinColumns = { @JoinColumn(name = "company_id") },
