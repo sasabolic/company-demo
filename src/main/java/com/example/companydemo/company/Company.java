@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * Company entity.
@@ -36,7 +38,7 @@ public class Company {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @ManyToMany(cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
+    @ManyToMany
     @JoinTable(
             name = "company_owner",
             joinColumns = { @JoinColumn(name = "company_id") },

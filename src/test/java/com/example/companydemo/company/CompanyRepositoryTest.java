@@ -9,10 +9,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -83,11 +80,12 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenFindAllThenReturnCorrectResult() {
+        final Owner owner = entityManager.find(Owner.class, 1L);
         Long before = repository.count();
 
-        entityManager.persist(CompanyDataFixtures.companyWithName("Tesla"));
-        entityManager.persist(CompanyDataFixtures.companyWithName("BMW"));
-        entityManager.persist(CompanyDataFixtures.companyWithName("Audi"));
+        entityManager.persist(CompanyDataFixtures.companyWithNameAndOwners("Tesla", Collections.singleton(owner)));
+        entityManager.persist(CompanyDataFixtures.companyWithNameAndOwners("BMW", Collections.singleton(owner)));
+        entityManager.persist(CompanyDataFixtures.companyWithNameAndOwners("Audi", Collections.singleton(owner)));
         entityManager.flush();
 
         final List<Company> result = repository.findAll();
@@ -98,7 +96,8 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenFindByIdThenReturnCorrectResult() {
-        final Company company = CompanyDataFixtures.companyWithName("Tesla");
+        final Owner owner = entityManager.find(Owner.class, 1L);
+        final Company company = CompanyDataFixtures.companyWithNameAndOwners("Tesla", Collections.singleton(owner));
         entityManager.persist(company);
         entityManager.flush();
 
@@ -116,7 +115,8 @@ public class CompanyRepositoryTest {
 
     @Test
     public void whenSearchByNameAndCountryThenReturnCorrectResult() {
-        final Company company = CompanyDataFixtures.companyWithName("Tesla");
+        final Owner owner = entityManager.find(Owner.class, 1L);
+        final Company company = CompanyDataFixtures.companyWithNameAndOwners("Tesla", Collections.singleton(owner));
         entityManager.persist(company);
         entityManager.flush();
 
