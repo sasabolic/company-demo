@@ -298,7 +298,7 @@ is no need of keeping track of user sessions in the distributed cache or databas
 For achieving the high availability of the service, the service gateway (e.g. Zuul) and service discovery (e.g. Eureka) could be used.
 Each instance of the demo project service will register itself with the Eureka server. Clients using the service will access it through
 Zuul gateway, which will provide the routing, resiliency, security etc. If for any reason one of the instances of the demo project crashes, 
-the Zuul will delegate the client calls to the rest of the healthy instances. Where failure is inevitable circuit breaker (e.g Hystrix) to enable resilience and fault tolerance to distributed systems.
+the Zuul will delegate the client calls to the rest of the healthy instances. Where failure is inevitable circuit breaker (e.g Hystrix) can be used to enable resilience and fault tolerance to distributed systems.
 
 ## Built With
 
