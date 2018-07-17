@@ -133,7 +133,7 @@ Example API calls for the company and owner resource (the database is prepopulat
 
     Request:
     
-        curl -X GET "http://localhost:8080/companies/1" -H "accept: */*"
+        curl -X GET "http://localhost:8080/companies/3" -H "accept: */*"
 
     Response:
     
@@ -144,7 +144,7 @@ Example API calls for the company and owner resource (the database is prepopulat
         Body:
         
             {
-                "id": 1,
+                "id": 3,
                 "name": "GUBI A/S",
                 "address": "Klubiensvej 7-9 / Pakhus 53, 2150 Frihavnen",
                 "city": "Copenhagen",
